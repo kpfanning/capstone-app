@@ -30,3 +30,5 @@
 # Image.create(url: "http://www.smoking-meat.com/image-files/IMG_1331-1000x667-686x458.jpg", restaurant_user_id: "1")
 # Image.create(url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmCzC-jdH7DSz847nQNw-kdFA2r4Gf5mRK0dzLhAl_A77MgxvQ-A", restaurant_user_id: "3")
 # Image.create(url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR80jLXaNrIr4trrcJaLLyZ1I6egEUoLrmgOtJoujE0dY18H0l4", restaurant_user_id: "1")
+# Image.create(url: "https://goo.gl/maps/opzWGY36ha92", restaurant_user_id: "4")
+# Image.create(url: "https://gimmedelicious.com/wp-content/uploads/2016/01/avocado-fries-6-of-30.jpg", restaurant_user_id: "5")
