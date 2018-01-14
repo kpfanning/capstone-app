@@ -9,10 +9,22 @@
 # User.create(name: "Kevin", email: "kevin@email.com", phone: "111-111-1111")
 # User.create(name: "Guest", email: "guest@email.com", phone: "222-222-2222")
 
+# Restaurant.create(name: "Skylark", address: "2149 S Halsted St, Chicago, IL 60608", phone: "312-948-5275")
+# Restaurant.create(name: "Nana", address: "3267 S Halsted St, Chicago, IL 60608", phone: "312-929-2486")
+# Restaurant.create(name: "Bridgeport Restaurant", address: "3500 S Halsted St, Chicago, IL 60609", phone: "773-247-2826")
+# Restaurant.create(name: "Buffalo Wings & Rings", address: "3434 S Halsted St, Chicago, IL 60608", phone: "773-579-9464")
+# Restaurant.create(name: "Antique Taco Bridgeport", address: "1000 W 35th St, Chicago, IL 60609", phone: "773-823-9410")
+
 # RestaurantUser.create!(restaurant_id: "1", user_id: "1", ratings: "4", review: "Very good food", value: "3", cost: "2", food_type: "Smoked meat", speed: "sit down", drink_list: "3")
 # RestaurantUser.create!(restaurant_id: "2", user_id: "1", ratings: "3", review: "Non GMO burgers", value: "2", cost: "3", food_type: "Burgers", speed: "sit down", drink_list: "none")
 # RestaurantUser.create!(restaurant_id: "1", user_id: "2", ratings: "2", review: "Mah", value: "1", cost: "2", food_type: "Burgers", speed: "sit down", drink_list: "none")
 # RestaurantUser.create!(restaurant_id: "3", user_id: "1", ratings: "", review: "", value: "", cost: "", food_type: "", speed: "", drink_list: "")
+
+# RestaurantUser.create!(restaurant_id: "4", user_id: "1", ratings: "4", review: "Awesome tater tots, perogies, beer list", value: "4", cost: "2", food_type: "American Bar food", speed: "sit down", drink_list: "4")
+# RestaurantUser.create!(restaurant_id: "5", user_id: "1", ratings: "4", review: "In season local ingredients", value: "2", cost: "4", food_type: "", speed: "sit down", drink_list: "2")
+# RestaurantUser.create!(restaurant_id: "6", user_id: "1", ratings: "", review: "", value: "", cost: "", food_type: "", speed: "", drink_list: "")
+# RestaurantUser.create!(restaurant_id: "7", user_id: "1", ratings: "", review: "", value: "", cost: "", food_type: "", speed: "", drink_list: "")
+
 
 # Image.create(url: "https://3.bp.blogspot.com/-PT-UxP4zGIY/WaIay-hOd8I/AAAAAAAA4kY/n84tAdmj_V4yMYLjZDu0ruNNial_n-4ZwCLcBGAs/s1600/burger-king-rodeo-king.png", restaurant_user_id: "2")
 # Image.create(url: "http://www.smoking-meat.com/image-files/IMG_1331-1000x667-686x458.jpg", restaurant_user_id: "1")

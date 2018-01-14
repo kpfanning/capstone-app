@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My App</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <script src="index2.js" defer></script>
+</head>
+<body>
+  <div id="app">
+    <router-view></router-view>
+  </div>
+</body>
+</html>
+
+<template id="home-page">
+  <div class="container">
+    <h1>{{ message }}</h1>
+        <div v-for="restaurant_user in restaurantUsers" v-bind:key="restaurant_user.id">
+        <h2>Ratings: {{ restaurant_user.ratings }}</h2>
+        <p>Name: {{ restaurant_user.restaurant.name }}</p>
+        <!-- <p>Image: {{ restaurant_user.images[0] ? restaurant_user.images[0].url : "N/A" }}</p>  -->
+        <h4>Images</h4>
+        <div v-for="image in restaurant_user.images">
+          <img v-bind:src="image.url" alt="" width="200">
+        </div>
+        <!-- <img class="card-img-top" src="http://www.smoking-meat.com/image-files/IMG_1331-1000x667-686x458.jpg"> -->
+        <p>Review: {{ restaurant_user.review }}</p>
+        <p>Value: {{ restaurant_user.value }}</p>
+    <h2>"test"</h2>
+      </div>
+    <p></p>
+  </div>
+</template>

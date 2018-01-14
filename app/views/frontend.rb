@@ -30,7 +30,7 @@ if input == "3"
 end
 
 if input == "4"
-  response = Unirest.get("http://localhost:3000/images") 
+  response = Unirest.get("http://localhost:3000/images")
   images = response.body
   pp images
 end
