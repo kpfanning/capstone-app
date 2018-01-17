@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   post "/restaurant_users" => "restaurant_users#create"
   post "/users" => "users#create"
 
+  get "/yelps" => "yelps#index"
+
 end

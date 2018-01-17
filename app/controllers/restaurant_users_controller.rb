@@ -2,13 +2,25 @@ class RestaurantUsersController < ApplicationController
   
   def index
     restaurant_user = RestaurantUser.all
+    # response = Unirest.get("https://api.yelp.com/v3/businesses/search?term=Ballpark Pub+&location=Chicago&limit=1",
+    #   headers: {
+    #   "Authorization" => "Bearer #{API_KEY}"})
+    # yelp_restaurants = response.body
+
     render json: restaurant_user.as_json
+    # render json: yelp_restaurants.as_json
   end
 
   def create 
+    # if params[:restauarant_id] exists, restaurant = Restaruant.find_by(...)
+
+    # else restaurant = Restaurant.create(name: params[:restuarant_name], ...)
+
+    # then save a new restaurant_user
+
     restaurant_user = RestaurantUser.new(
-      restaurant_id: "",
-      user_id: "",
+      restaurant_id: params["restaurant_id"],
+      user_id: "3",
       ratings: params["ratings"],
       review: params["review"],
       value: params["value"],

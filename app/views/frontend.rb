@@ -1,4 +1,4 @@
-require "Unirest"
+require "unirest"
 require "pp"
 
 puts "Welcome to MyEats"
