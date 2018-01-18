@@ -15,6 +15,8 @@ class RestaurantUser < ApplicationRecord
       food_type: food_type,
       speed: speed,
       drink_list: drink_list,
+      yelp_rating: nil,
+      yelp_price: nil
     }
   end
 end

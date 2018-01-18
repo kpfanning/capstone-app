@@ -1,11 +1,10 @@
-/* global Vue, VueRouter, axios */
+/* global Vue, VueRouter, axios, google */
 
 var HomePage = {
   template: "#home-page",
   data: function() {
     return {
       message: "Welcome to Vue.js!",
-      yelpRestaurants: [],
       restaurantUsers: [],
       restaurantUsersReviewed: [],
       restaurantUsersNotReviewed: []
@@ -20,17 +19,23 @@ var HomePage = {
           .sort(function(a, b) {
             return b.ratings - a.ratings;
           });
-        this.restaurantUsersNotReviewed = response.data.filter(
-          x => x.ratings === ""
-        );
+        this.restaurantUsersNotReviewed = response.data
+          .filter(x => x.ratings === "")
+          .slice(0, 3);
         console.log(this.restaurantUsersReviewed);
         console.log(this.restaurantUsersNotReviewed);
-      }.bind(this)
-    );
-    axios.get("/yelps").then(
-      function(response) {
-        this.yelpRestaurants = response.data;
-        console.log("yelp", this.yelpRestaurants);
+
+        this.restaurantUsersNotReviewed.forEach(
+          function(restaurant_user) {
+            axios.get("/yelps?search=" + restaurant_user.restaurant.name).then(
+              function(response) {
+                restaurant_user.yelp_rating =
+                  response.data.businesses[0].rating;
+                restaurant_user.yelp_price = response.data.businesses[0].price;
+              }.bind(this)
+            );
+          }.bind(this)
+        );
       }.bind(this)
     );
   }
@@ -90,6 +95,64 @@ var createReviewPage = {
         );
     }
   }
+};
+
+var MapPage = {
+  template: "#map-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      restaurants: []
+    };
+  },
+  mounted: function() {
+    var map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: { lat: 41.892305, lng: -87.634851, description: "Actualize" }
+    });
+
+    axios.get("/restaurants").then(
+      function(response) {
+        this.restaurants = response.data;
+        console.log(this.restaurants);
+
+        var geocoder = new google.maps.Geocoder();
+        this.restaurants.forEach(function(place) {
+          geocoder.geocode({ address: place.address }, function(
+            results,
+            status
+          ) {
+            if (status === "OK") {
+              map.setCenter(results[0].geometry.location);
+              var contentString = place.name;
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+              var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                title: place.name
+              });
+              marker.addListener("click", function() {
+                infowindow.open(map, marker);
+              });
+            } else {
+              alert(
+                "Geocode was not successful for the following reason: " + status
+              );
+            }
+          });
+        });
+      }.bind(this)
+    );
+  },
+
+  methods: {
+    setCurrentPost: function(inputPost) {
+      this.currentPost = inputPost;
+    }
+  },
+  computed: {}
 };
 
 var SignupPage = {
@@ -172,7 +235,8 @@ var router = new VueRouter({
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage },
-    { path: "/createReview", component: createReviewPage }
+    { path: "/createReview", component: createReviewPage },
+    { path: "/map", component: MapPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

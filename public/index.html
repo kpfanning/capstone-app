@@ -20,6 +20,7 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
     <script src="index.js" defer></script>
 </head>
 
@@ -44,6 +45,7 @@
                             </li>
                             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
                                 <div class="dropdown-menu"> <a class="dropdown-item" href="/#/signup">Signup</a> <a class="dropdown-item" href="/#/login">Login</a></a> <a class="dropdown-item" href="/#/logout">Logout</a> <a class="dropdown-item" href="/#/createReview">Review</a>
+                                    <a class="dropdown-item" href="/#/map">Map</a>
                                     <div class="dropdown-divider"></div> <a class="dropdown-item" href="checkout.html">Checkout</a> </div>
                             </li>
                         </ul>
@@ -56,6 +58,7 @@
         <a href="/#/login">Login</a>
         <a href="/#/logout">Logout</a>
         <a href="/#/createReview">Review</a>
+        <a href="/#/map">Map</a>
         <router-view></router-view>
         <!-- start: FOOTER -->
         <footer class="footer">
@@ -278,8 +281,9 @@
                             <!-- </div> -->
                                 <div class="content">
                                     <h5>{{ restaurant_user.restaurant.name }}</h5>
-                                    <h5>{{ restaurant_user.food_type }}</h5>
-                                    <h5>{{ restaurant_user.speed }}</h5>
+                                    <!-- <h5>{{ yelpRestaurants.businesses[0].rating }}</h5> -->
+                                    <h5>Yelp rating: {{ restaurant_user.yelp_rating }}</h5>
+                                    <h5>Yelp price: {{ restaurant_user.yelp_price }}</h5>
                                     <h5>{{ restaurant_user.drink_list }}</h5>
                                     <div class="product-name">{{ restaurant_user.review }}</div>
                                     <div class="price-btn-block"> <span class="price">Cost {{restaurant_user.cost}}</span> <a href="#" class="btn theme-btn-dash pull-right">Order Now</a> </div>
@@ -541,7 +545,7 @@
             <label>Phone: </label>
             <input type="text">
         </div>
-      </div>
+    </div>
 <!--       <div class="form-group">
         <label>Image:</label>
         <input type="string" class="form-control" v-model="images">
@@ -576,6 +580,13 @@
       </div>
       <button class="btn btn-primary" v-on:click="submit()">Submit</button>
     </div>
+  </div>
+</template>
+
+<template id="map-page">
+  <div class="container">
+    <h1>{{ message }}</h1>
+    <div id="map"></div>
   </div>
 </template>
 
