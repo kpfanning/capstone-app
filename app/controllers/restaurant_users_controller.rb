@@ -37,7 +37,7 @@ class RestaurantUsersController < ApplicationController
   end
 
   def show
-    restaurant_user = RestaurantUser.find_by(review: params[:review])
+    restaurant_user = RestaurantUser.find_by(id: params[:id])
     render json: restaurant_user.as_json
   end
 end

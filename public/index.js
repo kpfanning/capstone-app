@@ -155,6 +155,68 @@ var MapPage = {
   computed: {}
 };
 
+var DirectionsPage = {
+  template: "#directions-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      restaurant: {}
+    };
+  },
+  mounted: function() {
+    axios.get("/restaurant_users/" + this.$route.params.id).then(
+      function(response) {
+        console.log(response.data);
+        this.restaurant = response.data.restaurant;
+        console.log("the restaurant address is", this.restaurant.address);
+        this.setupDirections();
+      }.bind(this)
+    );
+  },
+
+  methods: {
+    // submit: function(inputPlace) {
+    //   this.restaurant_user.restaurant.address = inputPlace;
+    // },
+    setupDirections: function() {
+      console.log("the restaurant is", this.restaurant.address);
+      var directionsDisplay = new google.maps.DirectionsRenderer();
+      var directionsService = new google.maps.DirectionsService();
+      var map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12,
+        center: { lat: 41.892305, lng: -87.634851 }
+      });
+      directionsDisplay.setMap(map);
+      console.log("the", this.restaurant.address);
+      this.calculateAndDisplayRoute(directionsService, directionsDisplay);
+      document.getElementById("mode").addEventListener("change", function() {
+        this.calculateAndDisplayRoute(directionsService, directionsDisplay);
+      });
+    },
+    calculateAndDisplayRoute: function(directionsService, directionsDisplay) {
+      var selectedMode = document.getElementById("mode").value;
+      directionsService.route(
+        {
+          origin: { lat: 41.892305, lng: -87.634851 }, // Haight.
+          destination: this.restaurant.address, // Ocean Beach.
+          // Note that Javascript allows us to access the constant
+          // using square brackets and a string value as its
+          // "property."
+          travelMode: google.maps.TravelMode[selectedMode]
+        },
+        function(response, status) {
+          if (status === "OK") {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert("Directions request failed due to " + status);
+          }
+        }
+      );
+    }
+  },
+  computed: {}
+};
+
 var SignupPage = {
   template: "#signup-page",
   data: function() {
@@ -236,7 +298,8 @@ var router = new VueRouter({
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage },
     { path: "/createReview", component: createReviewPage },
-    { path: "/map", component: MapPage }
+    { path: "/map", component: MapPage },
+    { path: "/directions/:id", component: DirectionsPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "/restaurants" => "restaurants#index"
   get "/images" => "images#index"
   get "/restaurant_users" => "restaurant_users#index"
-  get "/restaurant_users/:review" => "restaurant_users#show"
+  get "/restaurant_users/:id" => "restaurant_users#show"
   post "/restaurant_users" => "restaurant_users#create"
   post "/users" => "users#create"
 
