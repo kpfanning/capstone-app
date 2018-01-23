@@ -1,4 +1,5 @@
 /* global Vue, VueRouter, axios, google */
+Vue.component("star-rating", VueStarRating.default);
 
 var HomePage = {
   template: "#home-page",
@@ -7,20 +8,26 @@ var HomePage = {
       message: "Welcome to Vue.js!",
       restaurantUsers: [],
       restaurantUsersReviewed: [],
-      restaurantUsersNotReviewed: []
+      restaurantUsersNotReviewed: [],
+      rating: 4
     };
   },
   mounted: function() {
     axios.get("/restaurant_users").then(
       function(response) {
+        // this.restaurantUsers = response.data.map(item => {
+        //   item.ratings = parseFloat(item.ratings);
+        //   return item;
+        // });
         this.restaurantUsers = response.data;
         this.restaurantUsersReviewed = response.data
           .filter(x => x.ratings !== "")
           .sort(function(a, b) {
             return b.ratings - a.ratings;
-          });
+          })
+          .slice(0, 6);
         this.restaurantUsersNotReviewed = response.data
-          .filter(x => x.ratings === "")
+          .filter(x => x.review === "")
           .slice(0, 3);
         console.log(this.restaurantUsersReviewed);
         console.log(this.restaurantUsersNotReviewed);
@@ -31,13 +38,131 @@ var HomePage = {
               function(response) {
                 restaurant_user.yelp_rating =
                   response.data.businesses[0].rating;
-                restaurant_user.yelp_price = response.data.businesses[0].price;
+                restaurant_user.yelp_price =
+                  response.data.businesses[0].price.length;
+                restaurant_user.yelp_image =
+                  response.data.businesses[0].image_url;
               }.bind(this)
             );
           }.bind(this)
         );
       }.bind(this)
     );
+  },
+  methods: {
+    updateRatingOnBackend: function(rating) {
+      console.log("the user updated the rating of", rating);
+    }
+  }
+};
+
+var ReviewsPage = {
+  template: "#reviews-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      // restaurantUsers: [],
+      restaurantUsersReviewed: []
+      // restaurantUsersNotReviewed: [],
+      // rating: 4
+    };
+  },
+  mounted: function() {
+    axios.get("/restaurant_users").then(
+      function(response) {
+        // this.restaurantUsers = response.data.map(item => {
+        //   item.ratings = parseFloat(item.ratings);
+        //   return item;
+        // });
+        this.restaurantUsers = response.data;
+        this.restaurantUsersReviewed = response.data
+          .filter(x => x.ratings !== "")
+          .sort(function(a, b) {
+            return b.ratings - a.ratings;
+          })
+          .slice(0, 6);
+        this.restaurantUsersNotReviewed = response.data
+          .filter(x => x.review === "")
+          .slice(0, 3);
+        console.log(this.restaurantUsersReviewed);
+        console.log(this.restaurantUsersNotReviewed);
+
+        this.restaurantUsersNotReviewed.forEach(
+          function(restaurant_user) {
+            axios.get("/yelps?search=" + restaurant_user.restaurant.name).then(
+              function(response) {
+                restaurant_user.yelp_rating =
+                  response.data.businesses[0].rating;
+                restaurant_user.yelp_price =
+                  response.data.businesses[0].price.length;
+                restaurant_user.yelp_image =
+                  response.data.businesses[0].image_url;
+              }.bind(this)
+            );
+          }.bind(this)
+        );
+      }.bind(this)
+    );
+  },
+  methods: {
+    updateRatingOnBackend: function(rating) {
+      console.log("the user updated the rating of", rating);
+    }
+  }
+};
+
+var toTryPage = {
+  template: "#toTry-page",
+  data: function() {
+    return {
+      message: "Welcome to Vue.js!",
+      // restaurantUsers: [],
+      restaurantUsersReviewed: [],
+      restaurantUsersNotReviewed: []
+      // rating: 4
+    };
+  },
+  mounted: function() {
+    axios.get("/restaurant_users").then(
+      function(response) {
+        // this.restaurantUsers = response.data.map(item => {
+        //   item.ratings = parseFloat(item.ratings);
+        //   return item;
+        // });
+        this.restaurantUsers = response.data;
+        this.restaurantUsersReviewed = response.data
+          .filter(x => x.ratings !== "")
+          .sort(function(a, b) {
+            return b.ratings - a.ratings;
+          })
+          .slice(0, 6);
+        this.restaurantUsersNotReviewed = response.data
+          .filter(x => x.review === "")
+          .slice(0, 3);
+        console.log(this.restaurantUsersReviewed);
+        console.log(this.restaurantUsersNotReviewed);
+
+        this.restaurantUsersNotReviewed.forEach(
+          function(restaurant_user) {
+            axios.get("/yelps?search=" + restaurant_user.restaurant.name).then(
+              function(response) {
+                restaurant_user.yelp_rating =
+                  response.data.businesses[0].rating;
+                restaurant_user.yelp_price =
+                  response.data.businesses[0].price.length;
+                restaurant_user.yelp_image =
+                  response.data.businesses[0].image_url;
+              }.bind(this)
+            );
+          }.bind(this)
+        );
+      }.bind(this)
+    );
+  },
+  methods: {
+    updateRatingOnBackend: function(rating) {
+      console.log("the user updated the rating of", rating);
+    }
   }
 };
 
@@ -189,9 +314,12 @@ var DirectionsPage = {
       directionsDisplay.setMap(map);
       console.log("the", this.restaurant.address);
       this.calculateAndDisplayRoute(directionsService, directionsDisplay);
-      document.getElementById("mode").addEventListener("change", function() {
-        this.calculateAndDisplayRoute(directionsService, directionsDisplay);
-      });
+      document.getElementById("mode").addEventListener(
+        "change",
+        function() {
+          this.calculateAndDisplayRoute(directionsService, directionsDisplay);
+        }.bind(this)
+      );
     },
     calculateAndDisplayRoute: function(directionsService, directionsDisplay) {
       var selectedMode = document.getElementById("mode").value;
@@ -294,6 +422,8 @@ var LogoutPage = {
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
+    { path: "/reviews", component: ReviewsPage },
+    { path: "/toTry", component: toTryPage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage },

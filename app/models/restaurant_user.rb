@@ -8,7 +8,7 @@ class RestaurantUser < ApplicationRecord
       id: id,
       restaurant: restaurant.as_json,
       images: images.as_json,
-      ratings: ratings,
+      ratings: ratings.to_f,
       review: review,
       value: value,
       cost: cost,

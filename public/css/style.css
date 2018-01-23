@@ -707,6 +707,13 @@ hr {
     padding: 10px 0;
 }
 
+.food-item-wrap .stars-right {
+    float: right;
+    margin-right: 30px;
+    /*vertical-align: middle;*/
+    
+}
+
 .food-item-wrap .right-like-part {
     border-left: 1px solid #eaebeb;
     padding: 25px 15px;
@@ -740,6 +747,7 @@ hr {
 .food-item-wrap .figure-wrap {
     position: relative;
     height: 210px;
+    width: 392px;
 }
 
 .food-item-wrap .food-item-wrap figure {
