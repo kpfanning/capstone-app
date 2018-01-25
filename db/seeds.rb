@@ -64,7 +64,7 @@
 # RestaurantUser.create!(restaurant_id: "17", user_id: "1", ratings: "", review: "", value: "", cost: "", food_type: "", speed: "", drink_list: "")
 # RestaurantUser.create!(restaurant_id: "20", user_id: "1", ratings: "", review: "", value: "", cost: "", food_type: "", speed: "", drink_list: "")
 # RestaurantUser.create!(restaurant_id: "21", user_id: "1", ratings: "", review: "", value: "", cost: "", food_type: "", speed: "", drink_list: "")
-
+# RestaurantUser.create!(restaurant_id: "6", user_id: "1", ratings: "", review: "", value: "", cost: "", food_type: "", speed: "", drink_list: "")
 
 # Image.create(url: "https://3.bp.blogspot.com/-PT-UxP4zGIY/WaIay-hOd8I/AAAAAAAA4kY/n84tAdmj_V4yMYLjZDu0ruNNial_n-4ZwCLcBGAs/s1600/burger-king-rodeo-king.png", restaurant_user_id: "2")
 # Image.create(url: "http://www.smoking-meat.com/image-files/IMG_1331-1000x667-686x458.jpg", restaurant_user_id: "1")

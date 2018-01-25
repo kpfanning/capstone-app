@@ -234,8 +234,16 @@ var createReviewPage = {
       console.log(selectedRestaurantUser);
       if (selectedRestaurantUser.ratings !== 0) {
         this.ratings = selectedRestaurantUser.ratings;
+        this.review = selectedRestaurantUser.review;
+        this.value = selectedRestaurantUser.value;
+        this.cost = selectedRestaurantUser.cost;
+        this.drink_list = selectedRestaurantUser.drink_list;
       } else {
         this.ratings = "";
+        this.review = "";
+        this.value = "";
+        this.cost = "";
+        this.drink_list = "";
       }
     }
   }
