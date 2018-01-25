@@ -16,35 +16,43 @@
 *   
 **/
 
-$(document).ready(function() {
+var initTheme = function() {
     "use strict";
 
     $(".animsition").animsition({
-        inClass: 'fade-in',
-        outClass: 'fade-out',
+        inClass: "fade-in",
+        outClass: "fade-out",
         inDuration: 300,
         outDuration: 300,
-        linkElement: '.animsition-link', // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
+        linkElement: ".animsition-link", // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
         loading: true,
-        loadingParentElement: 'body', //animsition wrapper element
-        loadingClass: 'animsition-loading',
-        unSupportCss: ['animation-duration', '-webkit-animation-duration', '-o-animation-duration'], //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
+        loadingParentElement: "body", //animsition wrapper element
+        loadingClass: "animsition-loading",
+        unSupportCss: [
+            "animation-duration",
+            "-webkit-animation-duration",
+            "-o-animation-duration"
+        ], //"unSupportCss" option allows you to disable the "animsition" in case the css property in the array is not supported by your browser.
         //The default setting is to disable the "animsition" in a browser that does not support "animation-duration".
         overlay: false,
-        overlayClass: 'animsition-overlay-slide',
-        overlayParentElement: 'body'
+        overlayClass: "animsition-overlay-slide",
+        overlayParentElement: "body"
     });
-   
-     $(".bg-image").css("background",function(){var a="url("+$(this).data("image-src")+") no-repeat center center";return a}),$(".bg-image").css("background-size","cover"),
-        
-    /// Range slider   
-    $("#ex2").slider({});
+
+    $(".bg-image").css("background", function() {
+        var a =
+            "url(" + $(this).data("image-src") + ") no-repeat center center";
+        return a;
+    }),
+        $(".bg-image").css("background-size", "cover"),
+        /// Range slider
+        $("#ex2").slider({});
     $("#ex2").on("slide", function(slideEvt) {
         $("#ex2SliderVal").text(slideEvt.value);
     });
 
     // grab an element
-    var myElement = document.querySelector('#header');
+    var myElement = document.querySelector("#header");
     // construct an instance of Headroom, passing the element
     var headroom = new Headroom(myElement, {
         // vertical offset in px before element is first unpinned
@@ -58,8 +66,7 @@ $(document).ready(function() {
     });
     // initialise
     headroom.init();
-    
-    
+
     // initialise
     headroom.init();
     ////////Packages filter
@@ -69,11 +76,11 @@ $(document).ready(function() {
         animationOptions: {
             duration: 750,
             easing: "linear",
-            queue: false,
+            queue: false
         }
     });
 
-    /////// Isotope 
+    /////// Isotope
     $("nav.primary ul a").click(function() {
         var selector = $(this).attr("data-filter");
         $container.isotope({
@@ -81,7 +88,7 @@ $(document).ready(function() {
             animationOptions: {
                 duration: 750,
                 easing: "linear",
-                queue: false,
+                queue: false
             }
         });
         return false;
@@ -98,13 +105,8 @@ $(document).ready(function() {
         var $optionSet = $this.parents("nav.primary ul");
         $optionSet.find(".selected").removeClass("selected");
         $this.addClass("selected");
-     
-        
-       
     });
 
-
-    
     //// Range slider seetings
     $("#slider-range").slider({
         range: true,
@@ -117,7 +119,12 @@ $(document).ready(function() {
             $(".maxvalue").html("$" + ui.values[1]);
         }
     });
-    $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+    $("#amount").val(
+        "$" +
+            $("#slider-range").slider("values", 0) +
+            " - $" +
+            $("#slider-range").slider("values", 1)
+    );
 
     ////// Increment and decrement select box
     $(".up").on("click", function() {
@@ -136,9 +143,6 @@ $(document).ready(function() {
             thisInput.val(newVal);
         }
     });
-    
-   
-         
-});
+};
 
-
+initTheme();

@@ -1,7 +1,8 @@
 class RestaurantUsersController < ApplicationController
   
   def index
-    restaurant_user = RestaurantUser.all
+    # restaurant_user = RestaurantUser.all
+    restaurant_user = User.first.restaurant_users
     # response = Unirest.get("https://api.yelp.com/v3/businesses/search?term=Ballpark Pub+&location=Chicago&limit=1",
     #   headers: {
     #   "Authorization" => "Bearer #{API_KEY}"})

@@ -10,11 +10,11 @@ class RestaurantUser < ApplicationRecord
       images: images.as_json,
       ratings: ratings.to_f,
       review: review,
-      value: value,
-      cost: cost,
+      value: value.to_f,
+      cost: cost.to_f,
       food_type: food_type,
       speed: speed,
-      drink_list: drink_list,
+      drink_list: drink_list.to_f,
       yelp_rating: nil,
       yelp_price: nil
     }

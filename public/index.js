@@ -28,7 +28,7 @@ var HomePage = {
           .slice(0, 6);
         this.restaurantUsersNotReviewed = response.data
           .filter(x => x.review === "")
-          .slice(0, 3);
+          .slice(0, 6);
         console.log(this.restaurantUsersReviewed);
         console.log(this.restaurantUsersNotReviewed);
 
@@ -48,6 +48,8 @@ var HomePage = {
         );
       }.bind(this)
     );
+    initTheme();
+    // $(".animsition").animsition({ loading: false });
   },
   methods: {
     updateRatingOnBackend: function(rating) {
@@ -76,31 +78,31 @@ var ReviewsPage = {
         // });
         this.restaurantUsers = response.data;
         this.restaurantUsersReviewed = response.data
-          .filter(x => x.ratings !== "")
+          .filter(x => x.ratings !== 0)
           .sort(function(a, b) {
             return b.ratings - a.ratings;
-          })
-          .slice(0, 6);
-        this.restaurantUsersNotReviewed = response.data
-          .filter(x => x.review === "")
-          .slice(0, 3);
+          });
+        // .slice(0, 2);
+        // this.restaurantUsersNotReviewed = response.data
+        //   .filter(x => x.review === "")
+        //   .slice(0, 2);
         console.log(this.restaurantUsersReviewed);
-        console.log(this.restaurantUsersNotReviewed);
+        // console.log(this.restaurantUsersNotReviewed);
 
-        this.restaurantUsersNotReviewed.forEach(
-          function(restaurant_user) {
-            axios.get("/yelps?search=" + restaurant_user.restaurant.name).then(
-              function(response) {
-                restaurant_user.yelp_rating =
-                  response.data.businesses[0].rating;
-                restaurant_user.yelp_price =
-                  response.data.businesses[0].price.length;
-                restaurant_user.yelp_image =
-                  response.data.businesses[0].image_url;
-              }.bind(this)
-            );
-          }.bind(this)
-        );
+        // this.restaurantUsersNotReviewed.forEach(
+        //   function(restaurant_user) {
+        //     axios.get("/yelps?search=" + restaurant_user.restaurant.name).then(
+        //       function(response) {
+        //         restaurant_user.yelp_rating =
+        //           response.data.businesses[0].rating;
+        //         restaurant_user.yelp_price =
+        //           response.data.businesses[0].price.length;
+        //         restaurant_user.yelp_image =
+        //           response.data.businesses[0].image_url;
+        //       }.bind(this)
+        //     );
+        //   }.bind(this)
+        // );
       }.bind(this)
     );
   },
@@ -117,7 +119,7 @@ var toTryPage = {
     return {
       message: "Welcome to Vue.js!",
       // restaurantUsers: [],
-      restaurantUsersReviewed: [],
+      // restaurantUsersReviewed: [],
       restaurantUsersNotReviewed: []
       // rating: 4
     };
@@ -129,17 +131,18 @@ var toTryPage = {
         //   item.ratings = parseFloat(item.ratings);
         //   return item;
         // });
-        this.restaurantUsers = response.data;
-        this.restaurantUsersReviewed = response.data
-          .filter(x => x.ratings !== "")
-          .sort(function(a, b) {
-            return b.ratings - a.ratings;
-          })
-          .slice(0, 6);
-        this.restaurantUsersNotReviewed = response.data
-          .filter(x => x.review === "")
-          .slice(0, 3);
-        console.log(this.restaurantUsersReviewed);
+        // this.restaurantUsers = response.data;
+        // this.restaurantUsersReviewed = response.data
+        //   .filter(x => x.ratings !== "")
+        //   .sort(function(a, b) {
+        //     return b.ratings - a.ratings;
+        //   })
+        //   .slice(0, 6);
+        this.restaurantUsersNotReviewed = response.data.filter(
+          x => x.review === ""
+        );
+        // .slice(0, 6);
+        // console.log(this.restaurantUsersReviewed);
         console.log(this.restaurantUsersNotReviewed);
 
         this.restaurantUsersNotReviewed.forEach(
@@ -180,16 +183,16 @@ var createReviewPage = {
       speed: "",
       drink_list: "",
       newRestaurantVisible: false,
-      restaurants: [],
+      restaurant_users: [],
       errors: []
     };
   },
 
   mounted: function() {
-    axios.get("/restaurants").then(
+    axios.get("/restaurant_users").then(
       function(response) {
-        this.restaurants = response.data;
-        console.log(this.restaurants);
+        this.restaurant_users = response.data;
+        console.log(this.restaurant_users);
       }.bind(this)
     );
   },
@@ -218,6 +221,22 @@ var createReviewPage = {
             this.errors = error.response.data.errors;
           }.bind(this)
         );
+    }
+  },
+  watch: {
+    restaurantId: function(value) {
+      console.log("restaurantId changed", value);
+      var selectedRestaurantUser = this.restaurant_users.filter(function(
+        restaurant_user
+      ) {
+        return restaurant_user.restaurant.id === value;
+      })[0];
+      console.log(selectedRestaurantUser);
+      if (selectedRestaurantUser.ratings !== 0) {
+        this.ratings = selectedRestaurantUser.ratings;
+      } else {
+        this.ratings = "";
+      }
     }
   }
 };
